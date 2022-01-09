@@ -1,15 +1,29 @@
+/*
+ * @Author: your name
+ * @Date: 2021-11-14 22:20:59
+ * @LastEditTime: 2022-01-09 15:39:47
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \全栈课程作业\part1\src\App.js
+ */
 import React from 'react'
 
-const course = 'Half Stack application development'
-const partName = {
-  part1: 'Fundamentals of React',
-  part2: 'Using props to pass data',
-  part3: 'State of a component'
-}
-const exercisesCount = {
-  exercises1: 10,
-  exercises2: 7,
-  exercises3: 14
+const course = {
+  name: 'Half Stack application development',
+  part: [
+    {
+      part: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      part: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      part: 'State of a component',
+      exercises: 14
+    }
+  ]
 }
 
 const Header = (props) => {
@@ -29,25 +43,27 @@ const Part = (props) => {
 const Content = (props) => {
   return (
     <div>
-      <Part partData={partData1}></Part>
-      <Part partData={partData2}></Part>
-      <Part partData={partData3}></Part>
+      {
+        props.parts.map((item, index) => 
+          <Part key={index} partData={item}></Part>
+        )
+      }
     </div>
   )
 }
 
 const Total = (props) => {
   return (
-    <p>Number of exercises {props.exercisesCount.exercises1 + props.exercisesCount.exercises2 + props.exercisesCount.exercises3}</p>
+    <p>Number of exercises {props.parts.reduce((accumulator, currentValue) => accumulator + currentValue.exercises, 0)}</p>
   )
 }
 
 const App = () => {
   return (
     <div>
-      <Header course={course}></Header>
-      <Content partName={partName} exercisesCount={exercisesCount}></Content>
-      <Total exercisesCount={exercisesCount}></Total>
+      <Header course={course.name}></Header>
+      <Content parts={course.part}></Content>
+      <Total parts={course.part}></Total>
     </div>
   )
 }
